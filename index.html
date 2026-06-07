@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ZYNAPSE VAULT | Finance OS</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -119,7 +119,7 @@ main{padding:24px 20px 110px;max-width:1280px;margin:0 auto;}
 .chart-wrap{position:relative;height:230px;}
 .charts-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px;}
 @media(max-width:900px){.charts-row-3{grid-template-columns:1fr 1fr;}}
-@media(max-width:600px){.fab{bottom:20px;right:16px;width:56px;height:56px;font-size:26px;z-index:99999;}.charts-row-3{grid-template-columns:1fr;}}
+@media(max-width:600px){.fab{bottom:80px;right:16px;width:56px;height:56px;font-size:26px;z-index:99999;}.charts-row-3{grid-template-columns:1fr;}}
 
 /* ── CAT GRID ── */
 .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:20px;}
@@ -163,7 +163,7 @@ tr:hover td{background:rgba(0,212,216,0.03);}
 
 /* ── NET WORTH ── */
 .nw-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
-@media(max-width:600px){.fab{bottom:20px;right:16px;width:56px;height:56px;font-size:26px;z-index:99999;}.nw-grid{grid-template-columns:1fr;}}
+@media(max-width:600px){.fab{bottom:80px;right:16px;width:56px;height:56px;font-size:26px;z-index:99999;}.nw-grid{grid-template-columns:1fr;}}
 .nw-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;}
 .nw-card-title{font-family:'Orbitron',monospace;font-size:10px;color:var(--cyan);letter-spacing:2px;margin-bottom:12px;}
 .nw-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(0,212,216,0.05);}
@@ -179,7 +179,7 @@ tr:hover td{background:rgba(0,212,216,0.03);}
 .nw-total.negative{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.25);color:var(--red);}
 
 /* ── FAB ── */
-.fab{position:fixed;bottom:28px;right:20px;width:58px;height:58px;border-radius:50%;background:var(--cyan);color:#070b14;border:3px solid #070b14;font-size:28px;cursor:pointer;z-index:99999;box-shadow:0 0 28px rgba(0,212,216,0.8),0 4px 20px rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.fab{position:fixed;bottom:80px;right:20px;width:58px;height:58px;border-radius:50%;background:var(--cyan);color:#070b14;border:3px solid #070b14;font-size:28px;cursor:pointer;z-index:99999;box-shadow:0 0 28px rgba(0,212,216,0.8),0 4px 20px rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;transition:all 0.2s;-webkit-tap-highlight-color:transparent;margin-bottom:env(safe-area-inset-bottom,0px);}
 .fab:hover{background:var(--cyan2);transform:scale(1.08);box-shadow:0 0 44px rgba(0,212,216,0.8);}
 
 /* ── MODAL ── */
@@ -216,7 +216,7 @@ tr:hover td{background:rgba(0,212,216,0.03);}
 .reminder-due.soon{background:rgba(251,191,36,0.15);color:var(--amber);border:1px solid rgba(251,191,36,0.3);}
 .reminder-due.ok{background:rgba(74,222,128,0.1);color:var(--green);border:1px solid rgba(74,222,128,0.25);}
 
-@media(max-width:600px){.fab{bottom:20px;right:16px;width:56px;height:56px;font-size:26px;z-index:99999;}
+@media(max-width:600px){.fab{bottom:80px;right:16px;width:56px;height:56px;font-size:26px;z-index:99999;}
   .stats-grid{grid-template-columns:1fr 1fr;}
   .cat-grid{grid-template-columns:1fr 1fr;}
   .logo{font-size:14px;}
@@ -262,7 +262,26 @@ tr:hover td{background:rgba(0,212,216,0.03);}
 <!-- ══════════ DASHBOARD TAB ══════════ -->
 <div class="tab-content active" id="tab-dashboard">
 
-  <!-- INCOME PANEL -->
+<!-- EXPENSE ENTRY PANEL -->
+  <div class="expense-panel" id="expensePanel">
+    <div class="expense-panel-header" onclick="toggleExpenseForm()">
+      <span class="savings-label">➕ ADD EXPENSE ENTRY</span>
+      <span id="expenseToggleIcon" style="color:var(--cyan);font-size:18px;font-weight:700;">▼</span>
+    </div>
+    <div id="expenseFormBody" style="margin-top:16px;">
+      <div class="expense-form-grid">
+        <div class="form-group"><label>Category</label><select id="mCat"></select></div>
+        <div class="form-group"><label>Amount (৳)</label><input type="number" id="mAmt" placeholder="0" min="0" step="1"></div>
+        <div class="form-group"><label>Note / Description</label><input type="text" id="mNote" placeholder="e.g. Lunch at RUET canteen..."></div>
+        <div class="form-group"><label>Date & Time</label><input type="datetime-local" id="mDate"></div>
+      </div>
+      <div style="margin-top:14px;">
+        <button class="btn btn-primary" style="width:100%;padding:12px;font-size:15px;letter-spacing:2px;" onclick="addEntry()">+ ADD EXPENSE</button>
+      </div>
+    </div>
+  </div>
+
+    <!-- INCOME PANEL -->
   <div class="income-panel">
     <div class="section-title" style="margin-bottom:14px;">💵 Income Manager</div>
     <div id="prevSavingsBanner"></div>
@@ -426,24 +445,8 @@ tr:hover td{background:rgba(0,212,216,0.03);}
 
 </main>
 
-<!-- FAB -->
-<button class="fab" onclick="openModal()" title="Add Expense (N)">+</button>
 
-<!-- EXPENSE MODAL -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <button class="close-modal" onclick="closeModal()">✕</button>
-    <div class="modal-title">+ NEW EXPENSE ENTRY</div>
-    <div class="form-group"><label>Category</label><select id="mCat"></select></div>
-    <div class="form-group"><label>Amount (৳)</label><input type="number" id="mAmt" placeholder="0" min="0" step="1"></div>
-    <div class="form-group"><label>Note / Description</label><input type="text" id="mNote" placeholder="e.g. Lunch at RUET canteen..."></div>
-    <div class="form-group"><label>Date & Time</label><input type="datetime-local" id="mDate"></div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="addEntry()">ADD ENTRY</button>
-    </div>
-  </div>
-</div>
+
 
 <script>
 // ═══════════════════════════════════════════════
@@ -576,9 +579,22 @@ function renderIncomePanel(){
 // ═══════════════════════════════════════════════
 //  EXPENSE ENTRY
 // ═══════════════════════════════════════════════
-function openModal(){document.getElementById('mDate').value=nowISO();document.getElementById('mAmt').value='';document.getElementById('mNote').value='';document.getElementById('modalOverlay').classList.add('open');}
-function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
-document.getElementById('modalOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('modalOverlay'))closeModal();});
+let expenseFormOpen=true;
+function toggleExpenseForm(){
+  expenseFormOpen=!expenseFormOpen;
+  document.getElementById('expenseFormBody').style.display=expenseFormOpen?'block':'none';
+  document.getElementById('expenseToggleIcon').textContent=expenseFormOpen?'▼':'▶';
+}
+function openModal(){
+  expenseFormOpen=true;
+  document.getElementById('expenseFormBody').style.display='block';
+  document.getElementById('expenseToggleIcon').textContent='▼';
+  document.getElementById('mDate').value=nowISO();
+  document.getElementById('mAmt').value='';
+  document.getElementById('mNote').value='';
+  document.getElementById('expensePanel').scrollIntoView({behavior:'smooth'});
+}
+function closeModal(){}
 function addEntry(){
   const cat=document.getElementById('mCat').value;
   const amt=parseFloat(document.getElementById('mAmt').value);
@@ -587,7 +603,7 @@ function addEntry(){
   if(!amt||amt<=0){alert('Enter a valid amount.');return;}
   const data=getData();
   data.push({id:uid(),cat,amt,note,dt});
-  saveData(data);closeModal();render();
+  saveData(data);document.getElementById("mAmt").value="";document.getElementById("mNote").value="";document.getElementById("mDate").value=nowISO();render();
 }
 function deleteEntry(id){
   if(!confirm('Delete this expense entry?'))return;
@@ -953,7 +969,6 @@ function init(){
   renderNetWorth();
 }
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape')closeModal();
   if(e.key==='n'&&!e.target.closest('input,select,textarea'))openModal();
 });
 init();
